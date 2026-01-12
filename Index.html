@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viimsi SPA - Atlantis H2O Aquapark</title>
+    <title>Viimsi SPA Aquapark - Atlantis H2O</title>
     <style>
         * {
             margin: 0;
@@ -12,53 +12,263 @@
         }
 
         :root {
-            --primary: #0077be;
-            --secondary: #00a8e8;
-            --accent: #00d9ff;
-            --dark: #001a33;
-            --light: #f0f9ff;
-            --white: #ffffff;
-            --gray: #64748b;
+            --primary-blue: #0066cc;
+            --ocean-blue: #006ba6;
+            --aqua-light: #00a8e8;
+            --wave-gradient: linear-gradient(135deg, #0066cc 0%, #00a8e8 100%);
+            --dark-blue: #003d5c;
+            --accent-cyan: #00e5ff;
+            --text-dark: #1a1a1a;
+            --text-light: #ffffff;
+            --bg-light: #f8fbff;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: var(--dark);
+            color: var(--text-dark);
             overflow-x: hidden;
-            background: var(--white);
         }
 
-        /* Hero Block */
-        .hero-section {
-            height: 100vh;
+        /* Header & Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 102, 204, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            box-shadow: 0 4px 30px rgba(0, 102, 204, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .logo-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--wave-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            background: linear-gradient(135deg, #0077be 0%, #00a8e8 50%, #00d9ff 100%);
-            overflow: hidden;
+            font-size: 2rem;
+            color: white;
         }
 
-        .hero-bg {
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-menu a::after {
+            content: '';
             position: absolute;
-            top: 0;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--primary-blue);
+            background: transparent;
+            color: var(--primary-blue);
+            cursor: pointer;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--wave-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: var(--wave-gradient);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wave-bg {
+            position: absolute;
+            bottom: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,133.3C672,139,768,181,864,197.3C960,213,1056,203,1152,181.3C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom center / cover no-repeat;
-            animation: wave 10s ease-in-out infinite;
+            height: 200px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M0,160L48,170.7C96,181,192,203,288,197.3C384,192,480,160,576,154.7C672,149,768,171,864,181.3C960,192,1056,192,1152,176C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") no-repeat bottom;
+            background-size: cover;
+            animation: wave 3s ease-in-out infinite alternate;
         }
 
         @keyframes wave {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50px); }
         }
 
         .hero-content {
             text-align: center;
-            z-index: 2;
+            color: white;
+            z-index: 1;
             padding: 2rem;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary-blue);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary-blue);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+
+        .scroll-indicator svg {
+            width: 40px;
+            height: 40px;
+            fill: white;
+            filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.3));
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
         }
 
         @keyframes fadeInUp {
@@ -72,355 +282,348 @@
             }
         }
 
-        .hero-logo {
-            font-size: 4rem;
-            font-weight: 700;
-            color: var(--white);
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 20px rgba(0,0,0,0.2);
-        }
-
-        .hero-tagline {
-            font-size: 1.5rem;
-            color: var(--white);
-            margin-bottom: 3rem;
-            opacity: 0.9;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            cursor: pointer;
-            animation: bounce 2s infinite;
-            z-index: 3;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
-        }
-
-        .scroll-indicator svg {
-            width: 40px;
-            height: 40px;
-            fill: var(--white);
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.2));
-        }
-
-        /* Header */
-        .header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-            z-index: 1000;
-            transition: transform 0.3s ease;
-        }
-
-        .header.hidden {
-            transform: translateY(-100%);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .lang-switcher {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .lang-btn {
-            padding: 0.5rem 0.75rem;
-            border: 2px solid var(--primary);
-            background: transparent;
-            color: var(--primary);
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            border-radius: 5px;
-        }
-
-        .lang-btn:hover, .lang-btn.active {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--primary);
-        }
-
-        /* Main Content */
-        .main-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 6rem 2rem 2rem;
-        }
-
-        /* News Popup */
-        .news-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
-            z-index: 2000;
-            max-width: 500px;
-            width: 90%;
-            animation: popIn 0.3s ease-out;
-        }
-
-        @keyframes popIn {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-        }
-
-        .popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1999;
-        }
-
-        .popup-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--gray);
-        }
-
-        /* Section Styles */
+        /* Content Sections */
         .section {
-            margin: 4rem 0;
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .section-title {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 2rem;
+            font-size: 3rem;
+            color: var(--primary-blue);
+            margin-bottom: 3rem;
             text-align: center;
+            position: relative;
         }
 
-        .card-grid {
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: var(--wave-gradient);
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* Attractions Grid */
+        .attractions-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 2rem;
+            margin-top: 3rem;
         }
 
-        .card {
-            background: var(--white);
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        .attraction-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 102, 204, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        .attraction-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 102, 204, 0.2);
         }
 
-        .card h3 {
-            color: var(--primary);
+        .attraction-image {
+            width: 100%;
+            height: 250px;
+            background: var(--wave-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+
+        .attraction-content {
+            padding: 2rem;
+        }
+
+        .attraction-title {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
             margin-bottom: 1rem;
         }
 
-        /* Price List */
-        .price-table {
+        .attraction-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Pricing Table */
+        .pricing-container {
+            background: white;
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 102, 204, 0.15);
+        }
+
+        .pricing-table {
             width: 100%;
-            background: var(--white);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-collapse: separate;
+            border-spacing: 0 1rem;
         }
 
-        .price-row {
-            display: flex;
-            justify-content: space-between;
+        .pricing-table thead {
+            background: var(--wave-gradient);
+            color: white;
+        }
+
+        .pricing-table th {
             padding: 1.5rem;
-            border-bottom: 1px solid var(--light);
-            transition: background 0.3s;
+            font-size: 1.2rem;
+            text-align: left;
         }
 
-        .price-row:hover {
-            background: var(--light);
+        .pricing-table th:first-child {
+            border-radius: 15px 0 0 15px;
         }
 
-        .price-row:last-child {
-            border-bottom: none;
+        .pricing-table th:last-child {
+            border-radius: 0 15px 15px 0;
         }
 
-        .price-name {
-            font-weight: 600;
-        }
-
-        .price-value {
-            font-size: 1.25rem;
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        /* Calendar */
-        .calendar-container {
-            background: var(--white);
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .calendar-nav {
-            background: var(--primary);
-            color: var(--white);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .calendar-nav:hover {
-            background: var(--secondary);
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 0.5rem;
-        }
-
-        .calendar-day {
-            padding: 1rem;
-            text-align: center;
-            border-radius: 10px;
-            background: var(--light);
-            cursor: pointer;
+        .pricing-table tbody tr {
+            background: var(--bg-light);
             transition: all 0.3s;
         }
 
-        .calendar-day:hover {
-            background: var(--secondary);
-            color: var(--white);
+        .pricing-table tbody tr:hover {
+            background: #e6f4ff;
+            transform: scale(1.02);
         }
 
-        .calendar-day.weekend {
-            background: #ffe0e0;
+        .pricing-table td {
+            padding: 1.5rem;
+            border: none;
         }
 
-        .calendar-day.special {
-            background: var(--accent);
-            color: var(--white);
+        .pricing-table tbody tr td:first-child {
+            border-radius: 15px 0 0 15px;
+            font-weight: 600;
+        }
+
+        .pricing-table tbody tr td:last-child {
+            border-radius: 0 15px 15px 0;
+            color: var(--primary-blue);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-info {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 102, 204, 0.1);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--wave-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .contact-details h3 {
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-map {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 102, 204, 0.1);
+            height: 100%;
+            min-height: 400px;
+            background: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--primary-blue);
         }
 
         /* Gallery */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
+            gap: 1.5rem;
+            margin-top: 3rem;
         }
 
         .gallery-item {
-            position: relative;
-            height: 250px;
-            border-radius: 15px;
+            aspect-ratio: 1;
+            background: var(--wave-gradient);
+            border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-        }
-
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
+            transition: transform 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
+            color: white;
+            font-size: 3rem;
         }
 
-        .gallery-overlay svg {
-            width: 50px;
-            height: 50px;
-            fill: var(--white);
+        .gallery-item:hover {
+            transform: scale(1.05);
         }
 
-        /* Contact Form */
-        .contact-form {
-            background: var(--white);
-            border-radius: 15px;
+        /* Partners Section */
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .partner-card {
+            background: white;
             padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 102, 204, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        .partner-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 102, 204, 0.2);
+        }
+
+        .partner-logo {
+            width: 120px;
+            height: 120px;
+            background: var(--wave-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .partner-name {
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-blue);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--accent-cyan);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+        }
+
+        .admin-close {
+            float: right;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .admin-form {
+            margin-top: 2rem;
         }
 
         .form-group {
@@ -431,203 +634,27 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
-            color: var(--dark);
+            color: var(--primary-blue);
         }
 
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group select {
             width: 100%;
-            padding: 1rem;
-            border: 2px solid var(--light);
+            padding: 0.8rem;
+            border: 2px solid #ddd;
             border-radius: 10px;
             font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
         }
 
         .form-group textarea {
+            min-height: 100px;
             resize: vertical;
-            min-height: 120px;
-        }
-
-        .submit-btn {
-            background: var(--primary);
-            color: var(--white);
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
-        }
-
-        .submit-btn:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--dark);
-            color: var(--white);
-            padding: 3rem 2rem;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h3 {
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links a {
-            color: var(--white);
-            text-decoration: none;
-            display: block;
-            padding: 0.5rem 0;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent);
-        }
-
-        .partners-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .partner-logo {
-            background: var(--white);
-            padding: 1rem;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 80px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-btn {
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            text-decoration: none;
-            transition: background 0.3s, transform 0.2s;
-        }
-
-        .social-btn:hover {
-            background: var(--accent);
-            transform: scale(1.1);
-        }
-
-        /* CTA Button */
-        .cta-btn {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--dark);
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,217,255,0.4);
-        }
-
-        .cta-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,217,255,0.6);
-        }
-
-        /* Admin Panel */
-        .admin-login {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--dark);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            transition: all 0.3s;
-        }
-
-        .admin-login:hover {
-            background: var(--primary);
-            transform: scale(1.05);
-        }
-
-        .admin-panel {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--white);
-            z-index: 3000;
-            overflow-y: auto;
-            padding: 2rem;
-        }
-
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--light);
-        }
-
-        .admin-section {
-            background: var(--light);
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero-logo {
-                font-size: 2.5rem;
-            }
-
-            .hero-tagline {
-                font-size: 1.2rem;
-            }
-
-            .nav-links {
+            .nav-menu {
                 display: none;
             }
 
@@ -635,564 +662,871 @@
                 display: block;
             }
 
-            .nav-links.mobile-active {
-                display: flex;
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero-buttons {
                 flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: var(--white);
-                padding: 1rem 2rem;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             }
 
             .section-title {
                 font-size: 2rem;
             }
 
-            .card-grid {
+            .contact-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .calendar-grid {
-                grid-template-columns: repeat(7, 1fr);
-                gap: 0.25rem;
-            }
-
-            .calendar-day {
-                padding: 0.5rem;
-                font-size: 0.9rem;
             }
 
             .footer-content {
                 grid-template-columns: 1fr;
             }
+        }
 
-            .admin-login {
-                bottom: 1rem;
-                right: 1rem;
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
-            }
+        /* Loading Animation */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(0, 102, 204, 0.1);
+            border-top-color: var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <!-- Hero Section -->
-    <section class="hero-section" id="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <h1 class="hero-logo">ATLANTIS H<sub>2</sub>O</h1>
-            <p class="hero-tagline" data-et="Eesti suurim veeparK" data-en="Estonia's Largest Water Park" data-ru="Крупнейший аквапарк Эстонии" data-fi="Viron suurin vesipuisto" data-lv="Lielākais ūdens parks Igaunijā">Eesti suurim veeparK</p>
-            <a href="#main" class="cta-btn" data-et="Avasta rohkem" data-en="Discover More" data-ru="Узнать больше" data-fi="Tutustu lisää" data-lv="Uzzināt vairāk">Avasta rohkem</a>
-        </div>
-        <div class="scroll-indicator" onclick="document.getElementById('main').scrollIntoView({behavior: 'smooth'})">
-            <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
-        </div>
-    </section>
-
     <!-- Header -->
     <header class="header" id="header">
         <nav class="nav-container">
-            <div class="logo">Viimsi SPA</div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#aquapark" data-et="Akvapark" data-en="Aquapark" data-ru="Аквапарк" data-fi="Vesipuisto" data-lv="Ūdens parks">Akvapark</a></li>
-                <li><a href="#sauna" data-et="Saunakeskus" data-en="Sauna Center" data-ru="Сауна центр" data-fi="Saunakeskus" data-lv="Sauna centrs">Saunakeskus</a></li>
-                <li><a href="#hotel" data-et="Hotell" data-en="Hotel" data-ru="Отель" data-fi="Hotelli" data-lv="Viesnīca">Hotell</a></li>
-                <li><a href="#prices" data-et="Hinnad" data-en="Prices" data-ru="Цены" data-fi="Hinnat" data-lv="Cenas">Hinnad</a></li>
-                <li><a href="#gallery" data-et="Galerii" data-en="Gallery" data-ru="Галерея" data-fi="Galleria" data-lv="Galerija">Galerii</a></li>
-                <li><a href="#contact" data-et="Kontakt" data-en="Contact" data-ru="Контакты" data-fi="Yhteystiedot" data-lv="Kontakti">Kontakt</a></li>
+            <a href="/" class="logo">
+                <div class="logo-img">🌊</div>
+                <span>Atlantis H2O</span>
+            </a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" data-translate="nav.home">Avaleht</a></li>
+                <li><a href="#attractions" data-translate="nav.attractions">Atraktsioonid</a></li>
+                <li><a href="#pricing" data-translate="nav.pricing">Hinnad</a></li>
+                <li><a href="#saunas" data-translate="nav.saunas">Saunad</a></li>
+                <li><a href="#cafe" data-translate="nav.cafe">Kohvik</a></li>
+                <li><a href="#birthdays" data-translate="nav.birthdays">Sünnipäevad</a></li>
+                <li><a href="#gallery" data-translate="nav.gallery">Galerii</a></li>
+                <li><a href="#contact" data-translate="nav.contact">Kontakt</a></li>
             </ul>
-            <div class="lang-switcher">
-                <button class="lang-btn active" onclick="changeLang('et')">ET</button>
-                <button class="lang-btn" onclick="changeLang('en')">EN</button>
-                <button class="lang-btn" onclick="changeLang('ru')">RU</button>
-                <button class="lang-btn" onclick="changeLang('fi')">FI</button>
-                <button class="lang-btn" onclick="changeLang('lv')">LV</button>
+
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="et">ET</button>
+                    <button class="lang-btn" data-lang="ru">RU</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="fi">FI</button>
+                    <button class="lang-btn" data-lang="lv">LV</button>
+                </div>
+
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/atlantish2o" class="social-icon" target="_blank">f</a>
+                    <a href="https://www.instagram.com/atlantish2o" class="social-icon" target="_blank">📷</a>
+                </div>
+
+                <button class="mobile-menu-btn">☰</button>
             </div>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
         </nav>
     </header>
 
-    <!-- News Popup -->
-    <div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
-    <div class="news-popup" id="newsPopup">
-        <button class="popup-close" onclick="closePopup()">×</button>
-        <h2 data-et="Uudised" data-en="News" data-ru="Новости" data-fi="Uutiset" data-lv="Ziņas">Uudised</h2>
-        <p id="newsContent">Tere tulemast Atlantis H2O! Eesti suurim ja põnevam veeparK!</p>
-    </div>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title" data-translate="hero.title">Viimsi SPA Aquapark</h1>
+            <p class="hero-subtitle" data-translate="hero.subtitle">Suurim ja põnevam veekeskus Eestis</p>
+            <div class="hero-buttons">
+                <a href="#pricing" class="btn btn-primary" data-translate="hero.buyTicket">Osta pilet</a>
+                <a href="#attractions" class="btn btn-secondary" data-translate="hero.explore">Tutvu atraktsioonidega</a>
+            </div>
+        </div>
+        <div class="wave-bg"></div>
+        <div class="scroll-indicator" onclick="document.getElementById('attractions').scrollIntoView({behavior: 'smooth'})">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+        </div>
+    </section>
 
-    <!-- Main Content -->
-    <main class="main-content" id="main">
-        <!-- Aquapark Section -->
-        <section class="section" id="aquapark">
-            <h2 class="section-title" data-et="Atlantis H2O Akvapark" data-en="Atlantis H2O Aquapark" data-ru="Атлантис H2O Аквапарк" data-fi="Atlantis H2O Vesipuisto" data-lv="Atlantis H2O Ūdens parks">Atlantis H2O Akvapark</h2>
-            <div class="card-grid">
-                <div class="card">
-                    <h3 data-et="8 Veeliumäge" data-en="8 Water Slides" data-ru="8 Водных горок" data-fi="8 Vesiliukumäkeä" data-lv="8 Ūdens slidkalniņi">8 Veeliumäge</h3>
-                    <p data-et="Põnevad liumäed kõigile vanustele. Pikim liumägi üle 120 meetri!" data-en="Exciting slides for all ages. The longest slide over 120 meters!" data-ru="Захватывающие горки для всех возрастов. Самая длинная горка более 120 метров!" data-fi="Jännittäviä liukumäkiä kaikenikäisille. Pisin liukumäki yli 120 metriä!" data-lv="Aizraujoši slidkalniņi visām vecuma grupām. Garākais slidkalniņš vairāk nekā 120 metri!">Põnevad liumäed kõigile vanustele. Pikim liumägi üle 120 meetri!</p>
-                </div>
-                <div class="card">
-                    <h3 data-et="Lainebassein" data-en="Wave Pool" data-ru="Бассейн с волнами" data-fi="Aaltoallas" data-lv="Viļņu baseins">Lainebassein</h3>
-                    <p data-et="Nautige laineid nagu ookeanis!" data-en="Enjoy waves like in the ocean!" data-ru="Наслаждайтесь волнами как в океане!" data-fi="Nauti aalloista kuin valtameressä!" data-lv="Izbaudiet viļņus kā okeānā!">Nautige laineid nagu ookeanis!</p>
-                </div>
-                <div class="card">
-                    <h3 data-et="Ringijõgi" data-en="Lazy River" data-ru="Круговая река" data-fi="Laiskavirta" data-lv="Slinkā upe">Ringijõgi</h3>
-                    <p data-et="Lõõgastav sõit ümber akvapargi" data-en="Relaxing ride around the aquapark" data-ru="Расслабляющая поездка по аквапарку" data-fi="Rentouttava ajelu vesipuiston ympäri" data-lv="Atslābinošs brauciens apkārt ūdens parkam">Lõõgastav sõit ümber akvapargi</p>
-                </div>
-                <div class="card">
-                    <h3 data-et="Laste mänguala" data-en="Kids Playground" data-ru="Детская площадка" data-fi="Lasten leikkialue" data-lv="Bērnu rotaļu laukums">Laste mänguala</h3>
-                    <p data-et="Turvaline ja lõbus ala väikestele külastajatele" data-en="Safe and fun area for little visitors" data-ru="Безопасная и веселая зона для маленьких посетителей" data-fi="Turvallinen ja hauska alue pienille vierailijoille" data-lv="Droša un jautra zona mazajiem apmeklētājiem">Turvaline ja lõbus ala väikestele külastajatele</p>
+    <!-- Attractions Section -->
+    <section class="section" id="attractions">
+        <h2 class="section-title" data-translate="attractions.title">Atraktsioonid</h2>
+        <div class="attractions-grid">
+            <div class="attraction-card">
+                <div class="attraction-image">🌊</div>
+                <div class="attraction-content">
+                    <h3 class="attraction-title" data-translate="attractions.slides">Veeliumäed</h3>
+                    <p class="attraction-description" data-translate="attractions.slidesDesc">Põnevad veeliumäed kõigile vanustele</p>
                 </div>
             </div>
+            <div class="attraction-card">
+                <div class="attraction-image">🏊</div>
+                <div class="attraction-content">
+                    <h3 class="attraction-title" data-translate="attractions.pools">Basseinid</h3>
+                    <p class="attraction-description" data-translate="attractions.poolsDesc">Erinevad basseinid peredele ja sportlastele</p>
+                </div>
+            </div>
+            <div class="attraction-card">
+                <div class="attraction-image">♨️</div>
+                <div class="attraction-content">
+                    <h3 class="attraction-title" data-translate="attractions.jacuzzi">Mullivannid</h3>
+                    <p class="attraction-description" data-translate="attractions.jacuzziDesc">Lõõgastu mullivannides</p>
+                </div>
+            </div>
+            <div class="attraction-card">
+                <div class="attraction-image">👶</div>
+                <div class="attraction-content">
+                    <h3 class="attraction-title" data-translate="attractions.kids">Laste ala</h3>
+                    <p class="attraction-description" data-translate="attractions.kidsDesc">Ohutu ja lõbus ala väikestele</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section" id="pricing">
+        <h2 class="section-title" data-translate="pricing.title">Hinnad</h2>
+        <div class="pricing-container">
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th data-translate="pricing.category">Kategooria</th>
+                        <th data-translate="pricing.price">Hind</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-translate="pricing.free">Lapsed 0-3 aastat</td>
+                        <td>TASUTA</td>
+                    </tr>
+                    <tr>
+                        <td data-translate="pricing.kids45">Lapsed 4-5 aastat</td>
+                        <td>8.00€</td>
+                    </tr>
+                    <tr>
+                        <td data-translate="pricing.kids616">Lapsed 6-16 aastat</td>
+                        <td>12.00€</td>
+                    </tr>
+                    <tr>
+                        <td data-translate="pricing.adult">Täiskasvanu</td>
+                        <td>16.00€</td>
+                    </tr>
+                    <tr>
+                        <td data-translate="pricing.family">Perepilet (kuni 5 inimest)</td>
+                        <td>45.00€</td>
+                    </tr>
+                    <tr>
+                        <td data-translate="pricing.hotelGuest">Hotelli külalised</td>
+                        <td>-20%</td>
+                    </tr>
+                </tbody>
+            </table>
             <div style="text-align: center; margin-top: 2rem;">
-                <a href="https://aquapark.ee/en/" class="cta-btn" target="_blank" data-et="Broneeri pilet" data-en="Book Ticket" data-ru="Забронировать билет" data-fi="Varaa lippu" data-lv="Rezervēt biļeti">Broneeri pilet</a>
+                <a href="https://aquapark.ee/veekeskuse-hinnakiri/" class="btn btn-primary" data-translate="pricing.buyNow">Osta pilet kohe</a>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Prices Section -->
-        <section class="section" id="prices">
-            <h2 class="section-title" data-et="Hinnad" data-en="Prices" data-ru="Цены" data-fi="Hinnat" data-lv="Cenas">Hinnad</h2>
-            <div class="price-table" id="priceList">
-                <div class="price-row">
-                    <span class="price-name" data-et="3 tunni pilet (6+ aastat)" data-en="3-hour ticket (6+ years)" data-ru="3-часовой билет (6+ лет)" data-fi="3 tunnin lippu (6+ vuotta)" data-lv="3 stundu biļete (6+ gadi)">3 tunni pilet (6+ aastat)</span>
-                    <span class="price-value">18 €</span>
-                </div>
-                <div class="price-row">
-                    <span class="price-name" data-et="Perepileti (2 täisk + 2 last)" data-en="Family ticket (2 adults + 2 children)" data-ru="Семейный билет (2 взр + 2 реб)" data-fi="Perhelippu (2 aikuista + 2 lasta)" data-lv="Ģimenes biļete (2 pieaugušie + 2 bērni)">Perepileti (2 täisk + 2 last)</span>
-                    <span class="price-value">60 €</span>
-                </div>
-                <div class="price-row">
-                    <span class="price-name" data-et="Hotelli külastajad - piiramatu" data-en="Hotel guests - unlimited" data-ru="Гости отеля - безлимит" data-fi="Hotellivieraat - rajaton" data-lv="Viesnīcas viesi - neierobežots">Hotelli külastajad - piiramatu</span>
-                    <span class="price-value">TASUTA</span>
-                </div>
-                <div class="price-row">
-                    <span class="price-name" data-et="Laste pilet (3-5 aastat)" data-en="Children's ticket (3-5 years)" data-ru="Детский билет (3-5 лет)" data-fi="Lasten lippu (3-5 vuotta)" data-lv="Bērnu biļete (3-5 gadi)">Laste pilet (3-5 aastat)</span>
-                    <span class="price-value">12 €</span>
-                </div>
-                <div class="price-row">
-                    <span class="price-name" data-et="Kliendikaart (aasta)" data-en="Client card (yearly)" data-ru="Клиентская карта (годовая)" data-fi="Asiakaskortti (vuosi)" data-lv="Klienta karte (gads)">Kliendikaart (aasta)</span>
-                    <span class="price-value">150 €</span>
+    <!-- Saunas Section -->
+    <section class="section" id="saunas">
+        <h2 class="section-title" data-translate="saunas.title">Saunad</h2>
+        <div class="attractions-grid">
+            <div class="attraction-card">
+                <div class="attraction-image">🧖</div>
+                <div class="attraction-content">
+                    <h3 class="attraction-title" data-translate="saunas.finnish">Soome saun</h3>
+                    <p class="attraction-description" data-translate="saunas.finnishDesc">Traditsiooniline kuiv saun</p>
                 </div>
             </div>
-        </section>
+            <div class="attraction-card">
+                <div class="attraction-image">💨</div>
+                <div class="attraction-content">
+                    <h3 class="attraction-title" data-translate="saunas.steam">Aurusaun</h3>
+                    <p class="attraction-description" data-translate="saunas.steamDesc">Niiske ja lõõgastav aurusaun</p>
+                </div>
+            </div>
+            <div class="attraction-card">
+                <div class="attraction-image">❄️</div>
+                <div class="attraction-content">
+                    <h3 class="attraction-title" data-translate="saunas.ice">Jääkamber</h3>
+                    <p class="attraction-description" data-translate="saunas.iceDesc">Värskendav jahutus pärast sauna</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <!-- Calendar Section -->
-        <section class="section" id="calendar">
-            <h2 class="section-title" data-et="Lahtiolekuajad" data-en="Opening Hours" data-ru="Часы работы" data-fi="Aukioloajat" data-lv="Darba laiks">Lahtiolekuajad</h2>
-            <div class="calendar-container">
-                <div class="calendar-header">
-                    <button class="calendar-nav" onclick="changeMonth(-1)">◀</button>
-                    <h3 id="calendarMonth">Jaanuar 2026</h3>
-                    <button class="calendar-nav" onclick="changeMonth(1)">▶</button>
-                </div>
-                <div class="calendar-grid" id="calendarGrid">
-                    <!-- Calendar will be generated by JS -->
-                </div>
+    <!-- Gallery Section -->
+    <section class="section" id="gallery">
+        <h2 class="section-title" data-translate="gallery.title">Galerii</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">📸</div>
+            <div class="gallery-item">🏊</div>
+            <div class="gallery-item">🌊</div>
+            <div class="gallery-item">👨‍👩‍👧‍👦</div>
+            <div class="gallery-item">🎉</div>
+            <div class="gallery-item">☀️</div>
+        </div>
+    </section>
+
+    <!-- Cafe Section -->
+    <section class="section" id="cafe">
+        <h2 class="section-title" data-translate="cafe.title">Kohvik</h2>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3 data-translate="cafe.menu">Menüü</h3>
+                <p data-translate="cafe.desc">Meie kohvikus pakume mitmekülgset valikut toite ja jooke. Tervislik hommikusöök, maitsev lõuna ja kerged suupisted.</p>
                 <div style="margin-top: 2rem;">
-                    <p><strong data-et="Lahtioleku ajad:" data-en="Opening hours:" data-ru="Часы работы:" data-fi="Aukioloajat:" data-lv="Darba laiks:">Lahtioleku ajad:</strong></p>
-                    <p data-et="E-N: 10:00 - 22:00" data-en="Mon-Sun: 10:00 - 22:00" data-ru="Пн-Вс: 10:00 - 22:00" data-fi="Ma-Su: 10:00 - 22:00" data-lv="P-Sv: 10:00 - 22:00">E-N: 10:00 - 22:00</p>
-                    <p data-et="Reede-laupäev: 10:00 - 24:00" data-en="Friday-Saturday: 10:00 - 24:00" data-ru="Пятница-Суббота: 10:00 - 24:00" data-fi="Perjantai-Lauantai: 10:00 - 24:00" data-lv="Piektdiena-Sestdiena: 10:00 - 24:00">Reede-laupäev: 10:00 - 24:00</p>
+                    <h4 style="color: var(--primary-blue); margin-bottom: 1rem;">Lahtiolekuajad:</h4>
+                    <p><strong>E-R:</strong> 10:00 - 22:00</p>
+                    <p><strong>L-P:</strong> 9:00 - 23:00</p>
                 </div>
             </div>
-        </section>
-
-        <!-- Sauna Section -->
-        <section class="section" id="sauna">
-            <h2 class="section-title" data-et="Saunakeskus" data-en="Sauna Center" data-ru="Сауна центр" data-fi="Saunakeskus" data-lv="Sauna centrs">Saunakeskus</h2>
-            <div class="card-grid">
-                <div class="card">
-                    <h3 data-et="Soome saun" data-en="Finnish Sauna" data-ru="Финская сауна" data-fi="Suomalainen sauna" data-lv="Somu pirts">Soome saun</h3>
-                    <p data-et="Traditsiooniline Soome kuumsaun temperatuuriga 80-90°C" data-en="Traditional Finnish hot sauna with temperature 80-90°C" data-ru="Традиционная финская сауна с температурой 80-90°C" data-fi="Perinteinen suomalainen kuuma sauna lämpötilassa 80-90°C" data-lv="Tradicionālā somu karstā pirts ar temperatūru 80-90°C">Traditsiooniline Soome kuumsaun temperatuuriga 80-90°C</p>
-                </div>
-                <div class="card">
-                    <h3 data-et="Aurusaun" data-en="Steam Room" data-ru="Паровая баня" data-fi="Höyrysauna" data-lv="Tvaika pirts">Aurusaun</h3>
-                    <p data-et="Niiske aurusaun kehale ja hingamisteede le" data-en="Moist steam room for body and respiratory system" data-ru="Влажная паровая баня для тела и дыхательной системы" data-fi="Kostea höyrysauna keholle ja hengityselimille" data-lv="Mitrs tvaika pirts ķermenim un elpošanas sistēmai">Niiske aurusaun kehale ja hingamisteede le</p>
-                </div>
-                <div class="card">
-                    <h3 data-et="Infrapunasaun" data-en="Infrared Sauna" data-ru="Инфракрасная сауна" data-fi="Infrapunasauna" data-lv="Infrasarkanā pirts">Infrapunasaun</h3>
-                    <p data-et="Kaasaegne IR-saun sügavaks lõõgastuseks" data-en="Modern IR-sauna for deep relaxation" data-ru="Современная ИК-сауна для глубокого расслабления" data-fi="Moderni IR-sauna syvään rentoutumiseen" data-lv="Moderna IR-pirts dziļai atslābināšanai">Kaasaegne IR-saun sügavaks lõõgastuseks</p>
-                </div>
-                <div class="card">
-                    <h3 data-et="Jääbasen" data-en="Ice Pool" data-ru="Ледяной бассейн" data-fi="Jääallas" data-lv="Ledus baseins">Jääbasen</h3>
-                    <p data-et="Värskendav külmvannivõtt pärast sauna" data-en="Refreshing cold water dip after sauna" data-ru="Освежающее погружение в холодную воду после сауны" data-fi="Virkistävä kylmävesikaste saunan jälkeen" data-lv="Atsvaidzinošs aukstā ūdens iegremdējums pēc pirts">Värskendav külmvannivõtt pärast sauna</p>
-                </div>
+            <div class="attraction-card">
+                <div class="attraction-image" style="height: 400px;">🍽️</div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Hotel Section -->
-        <section class="section" id="hotel">
-            <h2 class="section-title" data-et="Hotell" data-en="Hotel" data-ru="Отель" data-fi="Hotelli" data-lv="Viesnīca">Hotell</h2>
-            <div class="card-grid">
-                <div class="card">
-                    <h3 data-et="Kahekohaline tuba" data-en="Double Room" data-ru="Двухместный номер" data-fi="Kahden hengen huone" data-lv="Divu personu istaba">Kahekohaline tuba</h3>
-                    <p data-et="Mugav tuba kahele koos tasuta akvapargi külastusega" data-en="Comfortable room for two with free aquapark visit" data-ru="Комфортный номер на двоих с бесплатным посещением аквапарка" data-fi="Mukava huone kahdelle ilmaisella vesipuistokäynnillä" data-lv="Ērta istaba diviem ar bezmaksas ūdens parka apmeklējumu">Mugav tuba kahele koos tasuta akvapargi külastusega</p>
-                    <p style="margin-top: 1rem;"><strong>Alates 89 € / ööpäev</strong></p>
+    <!-- Birthdays Section -->
+    <section class="section" id="birthdays">
+        <h2 class="section-title" data-translate="birthdays.title">Sünnipäevad</h2>
+        <div class="pricing-container">
+            <h3 style="color: var(--primary-blue); margin-bottom: 2rem; text-align: center;" data-translate="birthdays.subtitle">Tähistage unustamatut sünnipäeva!</h3>
+            <div class="attractions-grid">
+                <div class="attraction-card">
+                    <div class="attraction-image">🎂</div>
+                    <div class="attraction-content">
+                        <h3 class="attraction-title" data-translate="birthdays.basic">Baasipakett</h3>
+                        <p class="attraction-description" data-translate="birthdays.basicDesc">Tuba 2h, kaunistused, piletid</p>
+                        <p style="font-size: 1.5rem; color: var(--primary-blue); font-weight: bold; margin-top: 1rem;">alates 150€</p>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3 data-et="Peretoа" data-en="Family Room" data-ru="Семейный номер" data-fi="Perhehuone" data-lv="Ģimenes istaba">Peretoа</h3>
-                    <p data-et="Avarad toad perele kuni 4 inimesele" data-en="Spacious rooms for families up to 4 people" data-ru="Просторные номера для семьи до 4 человек" data-fi="Tilavat huoneet perheelle 4 henkilölle" data-lv="Plašas istabas ģimenei līdz 4 cilvēkiem">Avarad toad perele kuni 4 inimesele</p>
-                    <p style="margin-top: 1rem;"><strong>Alates 149 € / ööpäev</strong></p>
+                <div class="attraction-card">
+                    <div class="attraction-image">🎉</div>
+                    <div class="attraction-content">
+                        <h3 class="attraction-title" data-translate="birthdays.premium">Premiumpakett</h3>
+                        <p class="attraction-description" data-translate="birthdays.premiumDesc">Kõik + toit ja animaator</p>
+                        <p style="font-size: 1.5rem; color: var(--primary-blue); font-weight: bold; margin-top: 1rem;">alates 250€</p>
+                    </div>
+                </div>
+                <div class="attraction-card">
+                    <div class="attraction-image">🎊</div>
+                    <div class="attraction-content">
+                        <h3 class="attraction-title" data-translate="birthdays.vip">VIP Pakett</h3>
+                        <p class="attraction-description" data-translate="birthdays.vipDesc">Eksklusiivne üritusruum ja teenindus</p>
+                        <p style="font-size: 1.5rem; color: var(--primary-blue); font-weight: bold; margin-top: 1rem;">alates 400€</p>
+                    </div>
                 </div>
             </div>
             <div style="text-align: center; margin-top: 2rem;">
-                <a href="https://aquapark.ee/en/" class="cta-btn" target="_blank" data-et="Broneeri hotell" data-en="Book Hotel" data-ru="Забронировать отель" data-fi="Varaa hotelli" data-lv="Rezervēt viesnīcu">Broneeri hotell</a>
+                <a href="tel:+3726667045" class="btn btn-primary" data-translate="birthdays.book">Broneeri nüüd</a>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Gallery Section -->
-        <section class="section" id="gallery">
-            <h2 class="section-title" data-et="Galerii" data-en="Gallery" data-ru="Галерея" data-fi="Galleria" data-lv="Galerija">Galerii</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item" onclick="alert('Foto 1')">
-                    <div class="gallery-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <h2 class="section-title" data-translate="contact.title">Kontakt ja Asukoht</h2>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div class="contact-details">
+                        <h3 data-translate="contact.address">Aadress</h3>
+                        <p>Ravi tee 1, Viimsi, 74001</p>
                     </div>
                 </div>
-                <div class="gallery-item" onclick="alert('Foto 2')">
-                    <div class="gallery-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <div class="contact-details">
+                        <h3 data-translate="contact.phone">Telefon</h3>
+                        <p><a href="tel:+3726667045" style="color: inherit;">+372 666 7045</a></p>
                     </div>
                 </div>
-                <div class="gallery-item" onclick="alert('Foto 3')">
-                    <div class="gallery-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                <div class="contact-item">
+                    <div class="contact-icon">✉️</div>
+                    <div class="contact-details">
+                        <h3 data-translate="contact.email">E-post</h3>
+                        <p><a href="mailto:info@aquapark.ee" style="color: inherit;">info@aquapark.ee</a></p>
                     </div>
                 </div>
-                <div class="gallery-item" onclick="alert('Foto 4')">
-                    <div class="gallery-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                    </div>
-                </div>
-                <div class="gallery-item" onclick="alert('Foto 5')">
-                    <div class="gallery-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                    </div>
-                </div>
-                <div class="gallery-item" onclick="alert('Foto 6')">
-                    <div class="gallery-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                <div class="contact-item">
+                    <div class="contact-icon">🕐</div>
+                    <div class="contact-details">
+                        <h3 data-translate="contact.hours">Lahtiolekuajad</h3>
+                        <p><strong>E-R:</strong> 10:00 - 22:00</p>
+                        <p><strong>L-P:</strong> 9:00 - 23:00</p>
                     </div>
                 </div>
             </div>
-        </section>
+            <div class="contact-map">
+                🗺️
+            </div>
+        </div>
+    </section>
 
-        <!-- Contact Form Section -->
-        <section class="section" id="contact">
-            <h2 class="section-title" data-et="Kontakt" data-en="Contact" data-ru="Контакты" data-fi="Yhteystiedot" data-lv="Kontakti">Kontakt</h2>
-            <div class="contact-form">
-                <form id="contactForm" onsubmit="sendToTelegram(event)">
-                    <div class="form-group">
-                        <label data-et="Nimi" data-en="Name" data-ru="Имя" data-fi="Nimi" data-lv="Vārds">Nimi</label>
-                        <input type="text" id="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label data-et="Kontakt (email või telefon)" data-en="Contact (email or phone)" data-ru="Контакт (email или телефон)" data-fi="Yhteystieto (sähköposti tai puhelin)" data-lv="Kontakts (e-pasts vai tālrunis)">Kontakt (email või telefon)</label>
-                        <input type="text" id="contact" required>
-                    </div>
-                    <div class="form-group">
-                        <label data-et="Sõnum" data-en="Message" data-ru="Сообщение" data-fi="Viesti" data-lv="Ziņojums">Sõnum</label>
-                        <textarea id="message" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn" data-et="Saada" data-en="Send" data-ru="Отправить" data-fi="Lähetä" data-lv="Sūtīt">Saada</button>
-                </form>
-            </div>
-        </section>
-    </main>
+    <!-- Partners Section -->
+    <section class="section" id="partners">
+        <h2 class="section-title" data-translate="partners.title">Meie Partnerid</h2>
+        <div class="partners-grid">
+            <a href="https://www.spatallinn.ee/" class="partner-card" target="_blank">
+                <div class="partner-logo">🏨</div>
+                <p class="partner-name">Viimsi SPA</p>
+            </a>
+            <a href="https://www.grandrose.ee/" class="partner-card" target="_blank">
+                <div class="partner-logo">🌹</div>
+                <p class="partner-name">Grand Rose SPA Hotel</p>
+            </a>
+            <a href="https://www.meresuu.ee/" class="partner-card" target="_blank">
+                <div class="partner-logo">🌊</div>
+                <p class="partner-name">Meresuu SPA & Hotel</p>
+            </a>
+            <a href="https://www.viimsikino.ee/" class="partner-card" target="_blank">
+                <div class="partner-logo">🎬</div>
+                <p class="partner-name">Viimsi Kino</p>
+            </a>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h3 data-et="Kontakt" data-en="Contact" data-ru="Контакты" data-fi="Yhteystiedot" data-lv="Kontakti">Kontakt</h3>
-                <p>Randvere tee 11, Viimsi</p>
-                <p>Tel: +372 606 6090</p>
-                <p>Email: info@aquapark.ee</p>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/atlantish2o/" target="_blank" class="social-btn">📷</a>
-                    <a href="https://www.facebook.com/atlantish2o" target="_blank" class="social-btn">f</a>
+                <h3>Atlantis H2O Aquapark</h3>
+                <p>Suurim ja põnevam veekeskus Eestis</p>
+                <div class="social-icons" style="margin-top: 1rem;">
+                    <a href="https://www.facebook.com/atlantish2o" class="social-icon" target="_blank">f</a>
+                    <a href="https://www.instagram.com/atlantish2o" class="social-icon" target="_blank">📷</a>
                 </div>
             </div>
             <div class="footer-section">
-                <h3 data-et="Kiirlingid" data-en="Quick Links" data-ru="Быстрые ссылки" data-fi="Pikalinkit" data-lv="Ātrās saites">Kiirlingid</h3>
-                <ul class="footer-links">
-                    <li><a href="#aquapark" data-et="Akvapark" data-en="Aquapark" data-ru="Аквапарк" data-fi="Vesipuisto" data-lv="Ūdens parks">Akvapark</a></li>
-                    <li><a href="#sauna" data-et="Saunakeskus" data-en="Sauna Center" data-ru="Сауна центр" data-fi="Saunakeskus" data-lv="Sauna centrs">Saunakeskus</a></li>
-                    <li><a href="#hotel" data-et="Hotell" data-en="Hotel" data-ru="Отель" data-fi="Hotelli" data-lv="Viesnīca">Hotell</a></li>
-                    <li><a href="#prices" data-et="Hinnad" data-en="Prices" data-ru="Цены" data-fi="Hinnat" data-lv="Cenas">Hinnad</a></li>
+                <h3 data-translate="footer.quickLinks">Kiirlingid</h3>
+                <ul>
+                    <li><a href="#attractions">Atraktsioonid</a></li>
+                    <li><a href="#pricing">Hinnad</a></li>
+                    <li><a href="#saunas">Saunad</a></li>
+                    <li><a href="#birthdays">Sünnipäevad</a></li>
+                    <li><a href="#gallery">Galerii</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h3 data-et="Partnerid" data-en="Partners" data-ru="Партнёры" data-fi="Kumppanit" data-lv="Partneri">Partnerid</h3>
-                <div class="partners-grid" id="partnersGrid">
-                    <div class="partner-logo">Partner 1</div>
-                    <div class="partner-logo">Partner 2</div>
-                    <div class="partner-logo">Partner 3</div>
-                    <div class="partner-logo">Partner 4</div>
-                </div>
+                <h3 data-translate="footer.info">Informatsioon</h3>
+                <ul>
+                    <li><a href="#contact">Kontakt</a></li>
+                    <li><a href="/admin">Admin</a></li>
+                    <li><a href="#">Privaatsuspoliitika</a></li>
+                    <li><a href="#">Kasutustingimused</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3 data-translate="footer.contact">Kontakt</h3>
+                <p>Ravi tee 1, Viimsi</p>
+                <p>+372 666 7045</p>
+                <p>info@aquapark.ee</p>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
-            <p>© 2026 Viimsi SPA - Atlantis H₂O. All rights reserved.</p>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Atlantis H2O Aquapark. Kõik õigused kaitstud.</p>
         </div>
     </footer>
 
-    <!-- Admin Login Button -->
-    <a href="#admin" class="admin-login" onclick="showAdmin(event)" data-et="Admin" data-en="Admin" data-ru="Админ" data-fi="Ylläpito" data-lv="Administrators">Admin</a>
-
     <!-- Admin Panel -->
     <div class="admin-panel" id="adminPanel">
-        <div class="admin-header">
-            <h2>Admin Panel</h2>
-            <button class="submit-btn" onclick="closeAdmin()">Sulge / Close</button>
-        </div>
-
-        <div class="admin-section">
-            <h3>Uudised / News</h3>
-            <div class="form-group">
-                <label>Uudise tekst / News text</label>
-                <textarea id="adminNews" rows="4">Tere tulemast Atlantis H2O! Eesti suurim ja põnevam veeparK!</textarea>
+        <div class="admin-content">
+            <button class="admin-close" onclick="closeAdmin()">×</button>
+            <h2 style="color: var(--primary-blue); margin-bottom: 0.5rem;">🔧 Admin Panel - Панель Управления</h2>
+            <p style="margin-bottom: 2rem; color: #666;">Сайти kontendi haldamine / Управление контентом сайта</p>
+            
+            <div style="background: #e6f4ff; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
+                <h3 style="color: var(--primary-blue); margin-bottom: 1rem;">📖 Инструкция / Juhend:</h3>
+                <ol style="margin-left: 1.5rem; line-height: 1.8;">
+                    <li><strong>Выберите язык</strong> - Valige keel (ET, RU, EN, FI, LV)</li>
+                    <li><strong>Измените тексты</strong> - Muutke tekste (заголовки, описания)</li>
+                    <li><strong>Обновите цены</strong> - Uuendage hinnad (формат JSON)</li>
+                    <li><strong>Добавьте фото</strong> - Lisage fotosid (URL ссылки)</li>
+                    <li><strong>Нажмите "Сохранить"</strong> - Klõpsake "Salvesta"</li>
+                </ol>
             </div>
-            <div class="form-group">
-                <label>
-                    <input type="checkbox" id="adminNewsShow" checked> Näita uudist / Show news
-                </label>
-            </div>
-            <button class="submit-btn" onclick="updateNews()">Salvesta / Save</button>
-        </div>
-
-        <div class="admin-section">
-            <h3>Hinnad / Prices</h3>
-            <div id="adminPrices">
+            
+            <div class="admin-form">
                 <div class="form-group">
-                    <label>Toote nimi / Product name</label>
-                    <input type="text" value="3 tunni pilet (6+ aastat)">
+                    <label>🌍 Keele valik / Выбор языка:</label>
+                    <select id="adminLang" style="font-size: 1rem;">
+                        <option value="et">🇪🇪 Eesti (ET)</option>
+                        <option value="ru">🇷🇺 Русский (RU)</option>
+                        <option value="en">🇬🇧 English (EN)</option>
+                        <option value="fi">🇫🇮 Suomi (FI)</option>
+                        <option value="lv">🇱🇻 Latviešu (LV)</option>
+                    </select>
                 </div>
+
                 <div class="form-group">
-                    <label>Hind / Price (€)</label>
-                    <input type="number" value="18">
+                    <label>📝 Hero pealkiri / Главный заголовок:</label>
+                    <input type="text" id="adminTitle" placeholder="Viimsi SPA Aquapark">
+                    <small style="color: #666; display: block; margin-top: 0.5rem;">Näide / Пример: "Parim veekeskus Eestis!"</small>
                 </div>
-                <button class="submit-btn" onclick="alert('Hinnad uuendatud / Prices updated')">Lisa uus / Add new</button>
-            </div>
-        </div>
 
-        <div class="admin-section">
-            <h3>Lahtiolekuajad / Opening Hours</h3>
-            <div class="form-group">
-                <label>Tööpäevad / Weekdays</label>
-                <input type="text" value="10:00 - 22:00">
-            </div>
-            <div class="form-group">
-                <label>Nädalavahetus / Weekend</label>
-                <input type="text" value="10:00 - 24:00">
-            </div>
-            <button class="submit-btn" onclick="alert('Lahtiolekuajad uuendatud / Hours updated')">Salvesta / Save</button>
-        </div>
+                <div class="form-group">
+                    <label>📄 Hero kirjeldus / Описание героя:</label>
+                    <textarea id="adminDesc" placeholder="Suurim ja põnevam veekeskus Eestis"></textarea>
+                    <small style="color: #666; display: block; margin-top: 0.5rem;">Lühike tekst / Краткий текст (max 200 tähemärki/символов)</small>
+                </div>
 
-        <div class="admin-section">
-            <h3>Partnerid / Partners</h3>
-            <div class="form-group">
-                <label>Partneri nimi / Partner name</label>
-                <input type="text">
-            </div>
-            <div class="form-group">
-                <label>Veebileht / Website</label>
-                <input type="url">
-            </div>
-            <button class="submit-btn" onclick="alert('Partner lisatud / Partner added')">Lisa partner / Add partner</button>
-        </div>
+                <div class="form-group">
+                    <label>💰 Hinnad / Цены (JSON formaat):</label>
+                    <textarea id="adminPrices" placeholder='{"kids45": "8.00€", "adult": "16.00€", "family": "45.00€"}'></textarea>
+                    <small style="color: #666; display: block; margin-top: 0.5rem;">
+                        Näide / Пример:<br>
+                        {"kids45": "10.00€", "adult": "18.00€", "family": "50.00€"}
+                    </small>
+                </div>
 
-        <div class="admin-section">
-            <h3>Fotod / Photos</h3>
-            <div class="form-group">
-                <label>Laadi üles foto / Upload photo</label>
-                <input type="file" accept="image/*">
+                <div class="form-group">
+                    <label>🖼️ Galerii pilt / Фото галереи (URL):</label>
+                    <input type="text" id="adminImage" placeholder="https://example.com/image.jpg">
+                    <small style="color: #666; display: block; margin-top: 0.5rem;">Sisestage pildi URL / Введите URL изображения</small>
+                </div>
+
+                <div class="form-group">
+                    <label>📅 Lahtiolekuajad / Часы работы:</label>
+                    <input type="text" id="adminHours" placeholder="E-R: 10:00-22:00, L-P: 9:00-23:00">
+                </div>
+
+                <div class="form-group">
+                    <label>📧 Kontakt email / Контактный email:</label>
+                    <input type="email" id="adminEmail" placeholder="info@aquapark.ee">
+                </div>
+
+                <div class="form-group">
+                    <label>📱 Telefon / Телефон:</label>
+                    <input type="tel" id="adminPhone" placeholder="+372 666 7045">
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button class="btn btn-primary" onclick="saveAdminChanges()" style="flex: 1;">
+                        ✅ Salvesta muudatused / Сохранить изменения
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeAdmin()" style="flex: 1;">
+                        ❌ Tühista / Отмена
+                    </button>
+                </div>
+
+                <div style="background: #fff3cd; padding: 1rem; border-radius: 10px; margin-top: 2rem; border-left: 4px solid #ffc107;">
+                    <strong>⚠️ Tähelepanu / Внимание:</strong><br>
+                    Demo režiimis muudatused ei salvesta päriselt. Real serveris need salvestatakse andmebaasi.<br>
+                    <em>В демо-режиме изменения не сохраняются реально. На реальном сервере они сохранятся в базе данных.</em>
+                </div>
             </div>
-            <button class="submit-btn" onclick="alert('Foto üles laetud / Photo uploaded')">Salvesta / Save</button>
         </div>
     </div>
 
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
     <script>
-        // Telegram Config
-        const TELEGRAM_BOT_TOKEN = '8275112739:AAFKoB78mXAvPxSo5lv9uuM382JDcoWUH_0';
-        const TELEGRAM_CHAT_ID = '8146157246';
+        // Translations - Complete
+        const translations = {
+            et: {
+                "nav.home": "Avaleht",
+                "nav.attractions": "Atraktsioonid",
+                "nav.pricing": "Hinnad",
+                "nav.saunas": "Saunad",
+                "nav.cafe": "Kohvik",
+                "nav.birthdays": "Sünnipäevad",
+                "nav.gallery": "Galerii",
+                "nav.contact": "Kontakt",
+                "hero.title": "Viimsi SPA Aquapark",
+                "hero.subtitle": "Suurim ja põnevam veekeskus Eestis",
+                "hero.buyTicket": "Osta pilet",
+                "hero.explore": "Tutvu atraktsioonidega",
+                "attractions.title": "Atraktsioonid",
+                "attractions.slides": "Veeliumäed",
+                "attractions.slidesDesc": "Põnevad veeliumäed kõigile vanustele",
+                "attractions.pools": "Basseinid",
+                "attractions.poolsDesc": "Erinevad basseinid peredele ja sportlastele",
+                "attractions.jacuzzi": "Mullivannid",
+                "attractions.jacuzziDesc": "Lõõgastu mullivannides",
+                "attractions.kids": "Laste ala",
+                "attractions.kidsDesc": "Ohutu ja lõbus ala väikestele",
+                "pricing.title": "Hinnad",
+                "pricing.category": "Kategooria",
+                "pricing.price": "Hind",
+                "pricing.free": "Lapsed 0-3 aastat",
+                "pricing.kids45": "Lapsed 4-5 aastat",
+                "pricing.kids616": "Lapsed 6-16 aastat",
+                "pricing.adult": "Täiskasvanu",
+                "pricing.family": "Perepilet (kuni 5 inimest)",
+                "pricing.hotelGuest": "Hotelli külalised",
+                "pricing.buyNow": "Osta pilet kohe",
+                "saunas.title": "Saunad",
+                "saunas.finnish": "Soome saun",
+                "saunas.finnishDesc": "Traditsiooniline kuiv saun",
+                "saunas.steam": "Aurusaun",
+                "saunas.steamDesc": "Niiske ja lõõgastav aurusaun",
+                "saunas.ice": "Jääkamber",
+                "saunas.iceDesc": "Värskendav jahutus pärast sauna",
+                "gallery.title": "Galerii",
+                "cafe.title": "Kohvik",
+                "cafe.menu": "Menüü",
+                "cafe.desc": "Meie kohvikus pakume mitmekülgset valikut toite ja jooke. Tervislik hommikusöök, maitsev lõuna ja kerged suupisted.",
+                "birthdays.title": "Sünnipäevad",
+                "birthdays.subtitle": "Tähistage unustamatut sünnipäeva!",
+                "birthdays.basic": "Baasipakett",
+                "birthdays.basicDesc": "Tuba 2h, kaunistused, piletid",
+                "birthdays.premium": "Premiumpakett",
+                "birthdays.premiumDesc": "Kõik + toit ja animaator",
+                "birthdays.vip": "VIP Pakett",
+                "birthdays.vipDesc": "Eksklusiivne üritusruum ja teenindus",
+                "birthdays.book": "Broneeri nüüd",
+                "contact.title": "Kontakt ja Asukoht",
+                "contact.address": "Aadress",
+                "contact.phone": "Telefon",
+                "contact.email": "E-post",
+                "contact.hours": "Lahtiolekuajad",
+                "partners.title": "Meie Partnerid",
+                "footer.quickLinks": "Kiirlingid",
+                "footer.info": "Informatsioon",
+                "footer.contact": "Kontakt"
+            },
+            ru: {
+                "nav.home": "Главная",
+                "nav.attractions": "Аттракционы",
+                "nav.pricing": "Цены",
+                "nav.saunas": "Сауны",
+                "nav.cafe": "Кафе",
+                "nav.birthdays": "Дни рождения",
+                "nav.gallery": "Галерея",
+                "nav.contact": "Контакты",
+                "hero.title": "Аквапарк Viimsi SPA",
+                "hero.subtitle": "Крупнейший и самый захватывающий аквапарк в Эстонии",
+                "hero.buyTicket": "Купить билет",
+                "hero.explore": "Узнать об аттракционах",
+                "attractions.title": "Аттракционы",
+                "attractions.slides": "Водные горки",
+                "attractions.slidesDesc": "Захватывающие водные горки для всех возрастов",
+                "attractions.pools": "Бассейны",
+                "attractions.poolsDesc": "Различные бассейны для семей и спортсменов",
+                "attractions.jacuzzi": "Джакузи",
+                "attractions.jacuzziDesc": "Расслабьтесь в джакузи",
+                "attractions.kids": "Детская зона",
+                "attractions.kidsDesc": "Безопасная и веселая зона для малышей",
+                "pricing.title": "Цены",
+                "pricing.category": "Категория",
+                "pricing.price": "Цена",
+                "pricing.free": "Дети 0-3 года",
+                "pricing.kids45": "Дети 4-5 лет",
+                "pricing.kids616": "Дети 6-16 лет",
+                "pricing.adult": "Взрослый",
+                "pricing.family": "Семейный билет (до 5 человек)",
+                "pricing.hotelGuest": "Гости отеля",
+                "pricing.buyNow": "Купить билет сейчас",
+                "saunas.title": "Сауны",
+                "saunas.finnish": "Финская сауна",
+                "saunas.finnishDesc": "Традиционная сухая сауна",
+                "saunas.steam": "Паровая сауна",
+                "saunas.steamDesc": "Влажная и расслабляющая паровая сауна",
+                "saunas.ice": "Ледяная комната",
+                "saunas.iceDesc": "Освежающее охлаждение после сауны",
+                "gallery.title": "Галерея",
+                "cafe.title": "Кафе",
+                "cafe.menu": "Меню",
+                "cafe.desc": "В нашем кафе мы предлагаем разнообразный выбор блюд и напитков. Здоровый завтрак, вкусный обед и легкие закуски.",
+                "birthdays.title": "Дни рождения",
+                "birthdays.subtitle": "Отметьте незабываемый день рождения!",
+                "birthdays.basic": "Базовый пакет",
+                "birthdays.basicDesc": "Комната на 2ч, украшения, билеты",
+                "birthdays.premium": "Премиум пакет",
+                "birthdays.premiumDesc": "Всё + еда и аниматор",
+                "birthdays.vip": "VIP Пакет",
+                "birthdays.vipDesc": "Эксклюзивный зал и обслуживание",
+                "birthdays.book": "Забронировать сейчас",
+                "contact.title": "Контакты и Местоположение",
+                "contact.address": "Адрес",
+                "contact.phone": "Телефон",
+                "contact.email": "Эл. почта",
+                "contact.hours": "Часы работы",
+                "partners.title": "Наши Партнеры",
+                "footer.quickLinks": "Быстрые ссылки",
+                "footer.info": "Информация",
+                "footer.contact": "Контакты"
+            },
+            en: {
+                "nav.home": "Home",
+                "nav.attractions": "Attractions",
+                "nav.pricing": "Pricing",
+                "nav.saunas": "Saunas",
+                "nav.cafe": "Café",
+                "nav.birthdays": "Birthdays",
+                "nav.gallery": "Gallery",
+                "nav.contact": "Contact",
+                "hero.title": "Viimsi SPA Aquapark",
+                "hero.subtitle": "The largest and most exciting water park in Estonia",
+                "hero.buyTicket": "Buy Ticket",
+                "hero.explore": "Explore Attractions",
+                "attractions.title": "Attractions",
+                "attractions.slides": "Water Slides",
+                "attractions.slidesDesc": "Exciting water slides for all ages",
+                "attractions.pools": "Pools",
+                "attractions.poolsDesc": "Various pools for families and athletes",
+                "attractions.jacuzzi": "Jacuzzis",
+                "attractions.jacuzziDesc": "Relax in the jacuzzis",
+                "attractions.kids": "Kids Area",
+                "attractions.kidsDesc": "Safe and fun area for little ones",
+                "pricing.title": "Pricing",
+                "pricing.category": "Category",
+                "pricing.price": "Price",
+                "pricing.free": "Children 0-3 years",
+                "pricing.kids45": "Children 4-5 years",
+                "pricing.kids616": "Children 6-16 years",
+                "pricing.adult": "Adult",
+                "pricing.family": "Family ticket (up to 5 people)",
+                "pricing.hotelGuest": "Hotel guests",
+                "pricing.buyNow": "Buy ticket now",
+                "saunas.title": "Saunas",
+                "saunas.finnish": "Finnish Sauna",
+                "saunas.finnishDesc": "Traditional dry sauna",
+                "saunas.steam": "Steam Sauna",
+                "saunas.steamDesc": "Humid and relaxing steam sauna",
+                "saunas.ice": "Ice Chamber",
+                "saunas.iceDesc": "Refreshing cooling after sauna",
+                "gallery.title": "Gallery",
+                "cafe.title": "Café",
+                "cafe.menu": "Menu",
+                "cafe.desc": "Our café offers a diverse selection of food and drinks. Healthy breakfast, delicious lunch and light snacks.",
+                "birthdays.title": "Birthdays",
+                "birthdays.subtitle": "Celebrate an unforgettable birthday!",
+                "birthdays.basic": "Basic Package",
+                "birthdays.basicDesc": "Room for 2h, decorations, tickets",
+                "birthdays.premium": "Premium Package",
+                "birthdays.premiumDesc": "Everything + food and animator",
+                "birthdays.vip": "VIP Package",
+                "birthdays.vipDesc": "Exclusive event room and service",
+                "birthdays.book": "Book now",
+                "contact.title": "Contact and Location",
+                "contact.address": "Address",
+                "contact.phone": "Phone",
+                "contact.email": "Email",
+                "contact.hours": "Opening Hours",
+                "partners.title": "Our Partners",
+                "footer.quickLinks": "Quick Links",
+                "footer.info": "Information",
+                "footer.contact": "Contact"
+            },
+            fi: {
+                "nav.home": "Etusivu",
+                "nav.attractions": "Vesilelut",
+                "nav.pricing": "Hinnat",
+                "nav.saunas": "Saunat",
+                "nav.cafe": "Kahvila",
+                "nav.birthdays": "Syntymäpäivät",
+                "nav.gallery": "Galleria",
+                "nav.contact": "Yhteystiedot",
+                "hero.title": "Viimsi SPA Vesipuisto",
+                "hero.subtitle": "Viron suurin ja jännittävin vesipuisto",
+                "hero.buyTicket": "Osta lippu",
+                "hero.explore": "Tutustu vesilelut",
+                "attractions.title": "Vesilelut",
+                "attractions.slides": "Vesiuisut",
+                "attractions.slidesDesc": "Jännittävät vesiuisut kaikille ikäisille",
+                "attractions.pools": "Altaat",
+                "attractions.poolsDesc": "Eri altaat perheille ja urheilijoille",
+                "attractions.jacuzzi": "Porealtaat",
+                "attractions.jacuzziDesc": "Rentoudu porealtaissa",
+                "attractions.kids": "Lasten alue",
+                "attractions.kidsDesc": "Turvallinen ja hauska alue lapsille",
+                "pricing.title": "Hinnat",
+                "pricing.category": "Kategoria",
+                "pricing.price": "Hinta",
+                "pricing.free": "Lapset 0-3 vuotta",
+                "pricing.kids45": "Lapset 4-5 vuotta",
+                "pricing.kids616": "Lapset 6-16 vuotta",
+                "pricing.adult": "Aikuinen",
+                "pricing.family": "Perhelippu (enintään 5 henkilöä)",
+                "pricing.hotelGuest": "Hotellin vieraat",
+                "pricing.buyNow": "Osta lippu nyt",
+                "saunas.title": "Saunat",
+                "saunas.finnish": "Suomalainen sauna",
+                "saunas.finnishDesc": "Perinteinen kuiva sauna",
+                "saunas.steam": "Höyrysauna",
+                "saunas.steamDesc": "Kostea ja rentouttava höyrysauna",
+                "saunas.ice": "Jäähuone",
+                "saunas.iceDesc": "Virkistävä viilennys saunan jälkeen",
+                "gallery.title": "Galleria",
+                "cafe.title": "Kahvila",
+                "cafe.menu": "Menu",
+                "cafe.desc": "Kahvilassamme tarjoamme monipuolisen valikoiman ruokaa ja juomia. Terveellinen aamiainen, herkullinen lounas ja kevyet välipalat.",
+                "birthdays.title": "Syntymäpäivät",
+                "birthdays.subtitle": "Juhli unohtumaton syntymäpäivä!",
+                "birthdays.basic": "Peruspaketti",
+                "birthdays.basicDesc": "Huone 2h, koristeet, liput",
+                "birthdays.premium": "Premium-paketti",
+                "birthdays.premiumDesc": "Kaikki + ruoka ja animaattori",
+                "birthdays.vip": "VIP-paketti",
+                "birthdays.vipDesc": "Eksklusiivinen tapahtumatila ja palvelu",
+                "birthdays.book": "Varaa nyt",
+                "contact.title": "Yhteystiedot ja Sijainti",
+                "contact.address": "Osoite",
+                "contact.phone": "Puhelin",
+                "contact.email": "Sähköposti",
+                "contact.hours": "Aukioloajat",
+                "partners.title": "Kumppanimme",
+                "footer.quickLinks": "Pikalinkit",
+                "footer.info": "Tiedot",
+                "footer.contact": "Yhteystiedot"
+            },
+            lv: {
+                "nav.home": "Sākums",
+                "nav.attractions": "Atrakcijas",
+                "nav.pricing": "Cenas",
+                "nav.saunas": "Pirtis",
+                "nav.cafe": "Kafejnīca",
+                "nav.birthdays": "Dzimšanas dienas",
+                "nav.gallery": "Galerija",
+                "nav.contact": "Kontakti",
+                "hero.title": "Viimsi SPA Ūdens parks",
+                "hero.subtitle": "Lielākais un aizraujošākais ūdens parks Igaunijā",
+                "hero.buyTicket": "Pirkt biļeti",
+                "hero.explore": "Iepazīties ar atrakcijām",
+                "attractions.title": "Atrakcijas",
+                "attractions.slides": "Ūdens slidkalniņi",
+                "attractions.slidesDesc": "Aizraujoši ūdens slidkalniņi visām vecuma grupām",
+                "attractions.pools": "Baseini",
+                "attractions.poolsDesc": "Dažādi baseini ģimenēm un sportistiem",
+                "attractions.jacuzzi": "Džakuzi",
+                "attractions.jacuzziDesc": "Atpūtieties džakuzi",
+                "attractions.kids": "Bērnu zona",
+                "attractions.kidsDesc": "Droša un jautra zona mazajiem",
+                "pricing.title": "Cenas",
+                "pricing.category": "Kategorija",
+                "pricing.price": "Cena",
+                "pricing.free": "Bērni 0-3 gadi",
+                "pricing.kids45": "Bērni 4-5 gadi",
+                "pricing.kids616": "Bērni 6-16 gadi",
+                "pricing.adult": "Pieaugušais",
+                "pricing.family": "Ģimenes biļete (līdz 5 cilvēkiem)",
+                "pricing.hotelGuest": "Viesnīcas viesi",
+                "pricing.buyNow": "Pirkt biļeti tagad",
+                "saunas.title": "Pirtis",
+                "saunas.finnish": "Somu pirts",
+                "saunas.finnishDesc": "Tradicionālā sausā pirts",
+                "saunas.steam": "Tvaika pirts",
+                "saunas.steamDesc": "Mitra un atslābinošā tvaika pirts",
+                "saunas.ice": "Ledus kamera",
+                "saunas.iceDesc": "Atsvaidzinoša atdzišana pēc pirts",
+                "gallery.title": "Galerija",
+                "cafe.title": "Kafejnīca",
+                "cafe.menu": "Ēdienkarte",
+                "cafe.desc": "Mūsu kafejnīcā piedāvājam plašu ēdienu un dzērienu izvēli. Veselīgas brokastis, garšīgas pusdienas un vieglas uzkodas.",
+                "birthdays.title": "Dzimšanas dienas",
+                "birthday.subtitle": "Sviniet neaizmirstamu dzimšanas dienu!",
+                "birthdays.basic": "Pamata pakete",
+                "birthdays.basicDesc": "Telpa 2h, dekorācijas, biļetes",
+                "birthdays.premium": "Premium pakete",
+                "birthdays.premiumDesc": "Viss + ēdiens un animators",
+                "birthdays.vip": "VIP pakete",
+                "birthdays.vipDesc": "Ekskluzīva pasākumu telpa un apkalpošana",
+                "birthdays.book": "Rezervēt tagad",
+                "contact.title": "Kontakti un Atrašanās vieta",
+                "contact.address": "Adrese",
+                "contact.phone": "Tālrunis",
+                "contact.email": "E-pasts",
+                "contact.hours": "Darba laiks",
+                "partners.title": "Mūsu Partneri",
+                "footer.quickLinks": "Ātrās saites",
+                "footer.info": "Informācija",
+                "footer.contact": "Kontakti"
+            }
+        };
 
         let currentLang = 'et';
-        let currentMonth = new Date().getMonth();
-        let currentYear = new Date().getFullYear();
-        let lastScroll = 0;
 
-        // Language Switching
-        function changeLang(lang) {
-            currentLang = lang;
-            document.documentElement.lang = lang;
-            
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            document.querySelectorAll('[data-' + lang + ']').forEach(el => {
-                el.textContent = el.getAttribute('data-' + lang);
+        // Language Switcher
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentLang = btn.dataset.lang;
+                updateLanguage();
+            });
+        });
+
+        function updateLanguage() {
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    el.textContent = translations[currentLang][key];
+                }
             });
         }
 
-        // Mobile Menu Toggle
-        function toggleMobileMenu() {
-            document.getElementById('navLinks').classList.toggle('mobile-active');
-        }
-
-        // Header Hide on Scroll
+        // Scroll Header Effect
         window.addEventListener('scroll', () => {
             const header = document.getElementById('header');
-            const currentScroll = window.pageY || document.documentElement.scrollTop;
-            
-            if (currentScroll > lastScroll && currentScroll > 100) {
-                header.classList.add('hidden');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
             } else {
-                header.classList.remove('hidden');
+                header.classList.remove('scrolled');
             }
-            lastScroll = currentScroll;
         });
 
-        // News Popup
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('popupOverlay').style.display = 'block';
-                document.getElementById('newsPopup').style.display = 'block';
-            }, 1000);
-        });
-
-        function closePopup() {
-            document.getElementById('popupOverlay').style.display = 'none';
-            document.getElementById('newsPopup').style.display = 'none';
-        }
-
-        // Calendar Generation
-        function generateCalendar() {
-            const grid = document.getElementById('calendarGrid');
-            const monthNames = {
-                et: ['Jaanuar', 'Veebruar', 'Märts', 'Aprill', 'Mai', 'Juuni', 'Juuli', 'August', 'September', 'Oktoober', 'November', 'Detsember'],
-                en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                ru: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-                fi: ['Tammikuu', 'Helmikuu', 'Maaliskuu', 'Huhtikuu', 'Toukokuu', 'Kesäkuu', 'Heinäkuu', 'Elokuu', 'Syyskuu', 'Lokakuu', 'Marraskuu', 'Joulukuu'],
-                lv: ['Janvāris', 'Februāris', 'Marts', 'Aprīlis', 'Maijs', 'Jūnijs', 'Jūlijs', 'Augusts', 'Septembris', 'Oktobris', 'Novembris', 'Decembris']
-            };
-            
-            document.getElementById('calendarMonth').textContent = monthNames[currentLang][currentMonth] + ' ' + currentYear;
-            
-            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-            
-            grid.innerHTML = '';
-            
-            const dayNames = ['P', 'E', 'T', 'K', 'N', 'R', 'L'];
-            dayNames.forEach(day => {
-                const el = document.createElement('div');
-                el.className = 'calendar-day';
-                el.textContent = day;
-                el.style.fontWeight = 'bold';
-                el.style.background = 'var(--primary)';
-                el.style.color = 'white';
-                grid.appendChild(el);
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             });
-            
-            for (let i = 0; i < (firstDay || 7) - 1; i++) {
-                const el = document.createElement('div');
-                el.className = 'calendar-day';
-                el.style.visibility = 'hidden';
-                grid.appendChild(el);
-            }
-            
-            for (let day = 1; day <= daysInMonth; day++) {
-                const el = document.createElement('div');
-                el.className = 'calendar-day';
-                el.textContent = day;
-                
-                const dayOfWeek = new Date(currentYear, currentMonth, day).getDay();
-                if (dayOfWeek === 0 || dayOfWeek === 6) {
-                    el.classList.add('weekend');
-                }
-                
-                if (day === 1 || day === 24) {
-                    el.classList.add('special');
-                }
-                
-                grid.appendChild(el);
-            }
-        }
+        });
 
-        function changeMonth(delta) {
-            currentMonth += delta;
-            if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear++;
-            } else if (currentMonth < 0) {
-                currentMonth = 11;
-                currentYear--;
-            }
-            generateCalendar();
-        }
-
-        // Send to Telegram
-        async function sendToTelegram(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const contact = document.getElementById('contact').value;
-            const message = document.getElementById('message').value;
-            
-            const text = `🆕 Uus sõnum Viimsi SPA veebilehelt\n\n👤 Nimi: ${name}\n📞 Kontakt: ${contact}\n💬 Sõnum: ${message}`;
-            
-            try {
-                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: text
-                    })
-                });
-                
-                if (response.ok) {
-                    alert('Sõnum saadetud! / Message sent!');
-                    document.getElementById('contactForm').reset();
-                } else {
-                    alert('Viga saatmisel / Error sending');
-                }
-            } catch (error) {
-                alert('Viga saatmisel / Error sending');
-                console.error('Error:', error);
-            }
-        }
-
-        // Admin Functions
-        function showAdmin(e) {
-            e.preventDefault();
-            const password = prompt('Sisesta parool / Enter password:');
-            if (password === 'admin123') {
-                document.getElementById('adminPanel').style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            } else {
-                alert('Vale parool / Wrong password');
-            }
+        // Admin Panel
+        if (window.location.pathname === '/admin') {
+            document.getElementById('adminPanel').classList.add('active');
         }
 
         function closeAdmin() {
-            document.getElementById('adminPanel').style.display = 'none';
-            document.body.style.overflow = 'auto';
+            document.getElementById('adminPanel').classList.remove('active');
+            window.history.pushState({}, '', '/');
         }
 
-        function updateNews() {
-            const newsText = document.getElementById('adminNews').value;
-            const showNews = document.getElementById('adminNewsShow').checked;
-            document.getElementById('newsContent').textContent = newsText;
-            alert('Uudised uuendatud / News updated');
+        function saveAdminChanges() {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            
+            setTimeout(() => {
+                loading.style.display = 'none';
+                alert('Muudatused salvestatud! (Demo režiim)');
+            }, 1500);
         }
+
+        // Mobile Menu Toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
+            const menu = document.getElementById('navMenu');
+            menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+        });
 
         // Initialize
-        generateCalendar();
+        updateLanguage();
     </script>
 </body>
 </html>
