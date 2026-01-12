@@ -588,6 +588,109 @@
             opacity: 0.7;
         }
 
+        /* Admin Login Modal */
+        .admin-login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-login-modal.active {
+            display: flex;
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 30px;
+            padding: 3rem;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 80px rgba(0, 102, 204, 0.3);
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--wave-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            margin: 0 auto 1rem;
+        }
+
+        .login-title {
+            color: var(--primary-blue);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+
+        .login-error {
+            display: none;
+            background: #ffebee;
+            color: #c62828;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .login-error.active {
+            display: block;
+        }
+
+        .login-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
         /* Admin Panel */
         .admin-panel {
             display: none;
@@ -614,30 +717,28 @@
             padding: 3rem;
         }
 
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-blue);
+        }
+
         .admin-close {
-            float: right;
             font-size: 2rem;
             cursor: pointer;
             background: none;
             border: none;
-        }
-
-        .admin-form {
-            margin-top: 2rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
             color: var(--primary-blue);
+            transition: transform 0.3s;
         }
 
-        .form-group input,
+        .admin-close:hover {
+            transform: rotate(90deg);
+        }
+
         .form-group textarea,
         .form-group select {
             width: 100%;
@@ -656,6 +757,18 @@
         @media (max-width: 768px) {
             .nav-menu {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
             }
 
             .mobile-menu-btn {
@@ -684,6 +797,10 @@
 
             .footer-content {
                 grid-template-columns: 1fr;
+            }
+
+            .login-buttons {
+                flex-direction: column;
             }
         }
 
@@ -715,7 +832,7 @@
     <!-- Header -->
     <header class="header" id="header">
         <nav class="nav-container">
-            <a href="/" class="logo">
+            <a href="#home" class="logo">
                 <div class="logo-img">🌊</div>
                 <span>Atlantis H2O</span>
             </a>
@@ -745,7 +862,7 @@
                     <a href="https://www.instagram.com/atlantish2o" class="social-icon" target="_blank">📷</a>
                 </div>
 
-                <button class="mobile-menu-btn">☰</button>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
             </div>
         </nav>
     </header>
@@ -1031,7 +1148,7 @@
                 <h3 data-translate="footer.info">Informatsioon</h3>
                 <ul>
                     <li><a href="#contact">Kontakt</a></li>
-                    <li><a href="/admin">Admin</a></li>
+                    <li><a href="#" onclick="showAdminLogin(); return false;">Admin</a></li>
                     <li><a href="#">Privaatsuspoliitika</a></li>
                     <li><a href="#">Kasutustingimused</a></li>
                 </ul>
@@ -1048,12 +1165,54 @@
         </div>
     </footer>
 
+    <!-- Admin Login Modal -->
+    <div class="admin-login-modal" id="adminLoginModal">
+        <div class="login-box">
+            <div class="login-header">
+                <div class="login-icon">🔐</div>
+                <h2 class="login-title">Admin Login</h2>
+                <p class="login-subtitle">Sisselogimine adminpaneeli / Вход в админ-панель</p>
+            </div>
+            
+            <div class="login-error" id="loginError">
+                ❌ Vale kasutajanimi või parool!<br>
+                <small>Неверный логин или пароль!</small>
+            </div>
+
+            <div class="form-group">
+                <label>👤 Kasutajanimi / Логин:</label>
+                <input type="text" id="loginUsername" placeholder="Sisesta kasutajanimi">
+            </div>
+
+            <div class="form-group">
+                <label>🔑 Parool / Пароль:</label>
+                <input type="password" id="loginPassword" placeholder="Sisesta parool">
+            </div>
+
+            <div class="login-buttons">
+                <button class="btn btn-primary" onclick="checkLogin()" style="flex: 1;">
+                    ✅ Logi sisse / Войти
+                </button>
+                <button class="btn btn-secondary" onclick="closeLoginModal()" style="flex: 1;">
+                    ❌ Tühista / Отмена
+                </button>
+            </div>
+
+            <div style="background: #e3f2fd; padding: 1rem; border-radius: 10px; margin-top: 1.5rem; font-size: 0.85rem; color: #1565c0;">
+                <strong>ℹ️ Demo info:</strong><br>
+                Login: Turroma19<br>
+                Password: Kajakas19
+            </div>
+        </div>
+    </div>
+
     <!-- Admin Panel -->
     <div class="admin-panel" id="adminPanel">
         <div class="admin-content">
-            <button class="admin-close" onclick="closeAdmin()">×</button>
-            <h2 style="color: var(--primary-blue); margin-bottom: 0.5rem;">🔧 Admin Panel - Панель Управления</h2>
-            <p style="margin-bottom: 2rem; color: #666;">Сайти kontendi haldamine / Управление контентом сайта</p>
+            <div class="admin-header">
+                <h2 style="color: var(--primary-blue);">🔧 Admin Panel - Панель Управления</h2>
+                <button class="admin-close" onclick="closeAdmin()">×</button>
+            </div>
             
             <div style="background: #e6f4ff; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
                 <h3 style="color: var(--primary-blue); margin-bottom: 1rem;">📖 Инструкция / Juhend:</h3>
@@ -1124,8 +1283,8 @@
                     <button class="btn btn-primary" onclick="saveAdminChanges()" style="flex: 1;">
                         ✅ Salvesta muudatused / Сохранить изменения
                     </button>
-                    <button class="btn btn-secondary" onclick="closeAdmin()" style="flex: 1;">
-                        ❌ Tühista / Отмена
+                    <button class="btn btn-secondary" onclick="logoutAdmin()" style="flex: 1;">
+                        🚪 Logi välja / Выйти
                     </button>
                 </div>
 
@@ -1143,7 +1302,7 @@
     </div>
 
     <script>
-        // Translations - Complete
+        // Translations
         const translations = {
             et: {
                 "nav.home": "Avaleht",
@@ -1529,4 +1688,4 @@
         updateLanguage();
     </script>
 </body>
-</html>
+</html>    
